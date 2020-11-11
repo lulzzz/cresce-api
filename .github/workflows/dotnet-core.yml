@@ -44,3 +44,10 @@ jobs:
         tags: |
           alienengineer/cresce:latest
           alienengineer/cresce:1.0.0
+          
+    - name: Trigger Azure Deploy
+      uses: muinmomin/webhook-action@v1.0.0
+      with:
+        url: https://$cresce:${{ secrets.AZURE_TRIGGER_TOKEN }}@cresce.scm.azurewebsites.net/docker/hook
+
+    
