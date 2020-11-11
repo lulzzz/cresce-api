@@ -1,4 +1,3 @@
-using System.Net.Http;
 using System.Threading.Tasks;
 using Cresce.Core.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +23,8 @@ namespace Cresce.Api.Controllers.Authentication
             {
                 return new OkObjectResult(new LoginResultDto
                 {
-                    OrganizationUrl = $"api/v1/{credentials.User}/organization/"
+                    OrganizationUrl = $"api/v1/{credentials.User}/organization/",
+                    Token = credentials.GenerateToken()
                 });
             }
 
@@ -35,5 +35,6 @@ namespace Cresce.Api.Controllers.Authentication
     public class LoginResultDto
     {
         public string OrganizationUrl { get; set; }
+        public string Token { get; set; }
     }
 }

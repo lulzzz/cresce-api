@@ -17,7 +17,7 @@ namespace Cresce.Api.Tests
             {
                 var mock = new Mock<ILoginService>();
 
-                mock.Setup(e => e.AreValidCredentials(It.Is<Credentials>(credentials => credentials.UserId == "myUser")))
+                mock.Setup(e => e.AreValidCredentials(It.Is<Credentials>(c => c.UserId == "myUser")))
                     .ReturnsAsync(true);
 
                 return mock.Object;
@@ -42,6 +42,7 @@ namespace Cresce.Api.Tests
             var loginResult = await response.Content.ReadAsAsync<LoginResultDto>();
             Assert.That(loginResult, Is.Not.Null);
             Assert.That(loginResult.OrganizationUrl, Is.EqualTo("api/v1/myUser/organization/"));
+            Assert.That(loginResult.Token, Is.Not.Null);
         }
 
         [Test]
