@@ -22,23 +22,31 @@ namespace Cresce.Api.Controllers.Authentication
 
         public string GenerateToken(DateTime? dateTime = null)
         {
-            var expirationDate = dateTime ?? DateTime.UtcNow.AddDays(2);
             var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenDescriptor = new SecurityTokenDescriptor
+            var token = tokenHandler.CreateToken(MakeDescriptor(dateTime));
+            return tokenHandler.WriteToken(token);
+        }
+
+        private static DateTime GetExpirationDate(DateTime? dateTime)
+        {
+            return dateTime ?? DateTime.UtcNow.AddDays(2);
+        }
+
+        private SecurityTokenDescriptor MakeDescriptor(DateTime? dateTime = null)
+        {
+            return new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.Name, User),
                     new Claim(ClaimTypes.Role, "Admin")
                 }),
-                Expires = expirationDate,
+                Expires = GetExpirationDate(dateTime),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Settings.Secret)),
                     SecurityAlgorithms.HmacSha256Signature
                 )
             };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
         }
     }
 }
