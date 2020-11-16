@@ -15,7 +15,20 @@ namespace Cresce.Api.Controllers.Authentication
             _loginService = loginService;
         }
 
-        // GET
+        [HttpGet("{token}")]
+        public IActionResult VerifyToken(string token)
+        {
+            var tokenHandler = new TokenHandler(token);
+            if (!tokenHandler.IsOk)
+            {
+                return Unauthorized(new UnauthorizedDto
+                {
+                    Reason = tokenHandler.Reason
+                });
+            }
+            return Ok();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Login(CredentialsDto credentials)
         {
@@ -32,9 +45,15 @@ namespace Cresce.Api.Controllers.Authentication
         }
     }
 
-    public class LoginResultDto
+    public class UnauthorizedDto
     {
-        public string OrganizationUrl { get; set; }
-        public string Token { get; set; }
+        public UnauthorizedReason Reason { get; set; }
+    }
+
+    public enum UnauthorizedReason
+    {
+        Unknown,
+        Expired,
+        Invalid
     }
 }

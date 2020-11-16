@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -62,5 +63,69 @@ namespace Cresce.Api.Tests
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
         }
 
+        [Test]
+        public async Task Validating_an_expired_token_returns_401()
+        {
+            // Arrange
+            var client = GetClient();
+            var token = GenerateExpiredToken();
+
+            // Act
+            var response = await client.GetAsync($"/api/v1/authentication/{token}");
+
+            // Assert
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+            var dto = await response.Content.ReadAsAsync<UnauthorizedDto>();
+            Assert.That(dto, Is.Not.Null);
+            Assert.That(dto.Reason, Is.EqualTo(UnauthorizedReason.Expired));
+        }
+
+        [Test]
+        public async Task Validating_an_invalid_token_returns_401()
+        {
+            // Arrange
+            var client = GetClient();
+            const string token = "some_invalid_token";
+
+            // Act
+            var response = await client.GetAsync($"/api/v1/authentication/{token}");
+
+            // Assert
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+            var dto = await response.Content.ReadAsAsync<UnauthorizedDto>();
+            Assert.That(dto, Is.Not.Null);
+            Assert.That(dto.Reason, Is.EqualTo(UnauthorizedReason.Invalid));
+        }
+
+        [Test]
+        public async Task Validating_a_valid_token_returns_200()
+        {
+            // Arrange
+            var client = GetClient();
+            var token = GenerateToken();
+
+            // Act
+            var response = await client.GetAsync($"/api/v1/authentication/{token}");
+
+            // Assert
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        }
+
+        private static string GenerateToken()
+        {
+            return new CredentialsDto
+            {
+                User = "test User"
+            }.GenerateToken(DateTime.UtcNow.AddMinutes(10));
+        }
+
+        private static string GenerateExpiredToken()
+        {
+            return new CredentialsDto
+            {
+                User = "test User"
+            }.GenerateToken(DateTime.UtcNow.AddSeconds(1));
+        }
     }
 }
+

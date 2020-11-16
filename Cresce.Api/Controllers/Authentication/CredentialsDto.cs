@@ -20,10 +20,10 @@ namespace Cresce.Api.Controllers.Authentication
             );
         }
 
-        public string GenerateToken()
+        public string GenerateToken(DateTime? dateTime = null)
         {
+            var expirationDate = dateTime ?? DateTime.UtcNow.AddDays(2);
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(Settings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
@@ -31,9 +31,9 @@ namespace Cresce.Api.Controllers.Authentication
                     new Claim(ClaimTypes.Name, User),
                     new Claim(ClaimTypes.Role, "Admin")
                 }),
-                Expires = DateTime.UtcNow.AddDays(2),
+                Expires = expirationDate,
                 SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(key),
+                    new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Settings.Secret)),
                     SecurityAlgorithms.HmacSha256Signature
                 )
             };
@@ -42,3 +42,4 @@ namespace Cresce.Api.Controllers.Authentication
         }
     }
 }
+
