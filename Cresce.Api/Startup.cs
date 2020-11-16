@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json.Serialization;
 using Cresce.Core;
 using Cresce.Core.InMemory;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -23,7 +24,14 @@ namespace Cresce.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services
+                .AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.IgnoreNullValues = true;
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                    options.JsonSerializerOptions.WriteIndented = true;
+                });
             ServicesConfiguration.RegisterServices(services);
             GatewaysConfiguration.RegisterServices(services);
 
@@ -43,7 +51,8 @@ namespace Cresce.Api
                         ValidateIssuer = false,
                         ValidateAudience = false
                     };
-                });
+                })
+                ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
