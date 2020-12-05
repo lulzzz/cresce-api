@@ -13,14 +13,23 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - run: |
+        git fetch --prune --unshallow
+        
+    - name: Fetch tags for GitVersion
+      run: git fetch --tags
+    
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.301
+        dotnet-version: 5.0.100
+        
     - name: Install dependencies
       run: dotnet restore
+      
     - name: Build
       run: dotnet build --configuration Release --no-restore
+      
     - name: Test
       run: dotnet test --no-restore --verbosity normal
       
@@ -35,8 +44,9 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-        
-    - name: Build and push Docker images
+      if: contains('refs/heads/master', github.ref)
+      
+    - name: Build and push Docker image
       uses: docker/build-push-action@v2.1.0
       with:
         file: ./Dockerfile
@@ -44,10 +54,20 @@ jobs:
         tags: |
           alienengineer/cresce:latest
           alienengineer/cresce:1.0.0
-          
+      if: contains('refs/heads/master', github.ref)
+      
+    - name: Build Docker image
+      uses: docker/build-push-action@v2.1.0
+      with:
+        file: ./Dockerfile
+        push: false
+        tags: |
+          alienengineer/cresce:latest
+          alienengineer/cresce:1.0.0
+      if: contains('refs/heads/develop', github.ref)
+      
     - name: Trigger Azure Deploy
       uses: muinmomin/webhook-action@v1.0.0
       with:
         url: https://$cresce:${{ secrets.AZURE_TRIGGER_TOKEN }}@cresce.scm.azurewebsites.net/docker/hook
-
-    
+      if: contains('refs/heads/master', github.ref)
