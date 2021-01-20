@@ -1,23 +1,30 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cresce.Core.Authentication;
+using Cresce.Core.Employees.EmployeeValidation;
+using Cresce.Core.Employees.GetEmployees;
 
 namespace Cresce.Core.Employees
 {
     internal class EmployeeService : IEmployeeService
     {
-        private readonly IGetEmployeesGateway _gateway;
+        private readonly IGetEmployeesService _getEmployeesService;
+        private readonly IEmployeeValidationService _employeeValidationService;
 
-        public EmployeeService(IGetEmployeesGateway gateway)
+        public EmployeeService(
+            IGetEmployeesService getEmployeesService,
+            IEmployeeValidationService employeeValidationService
+        )
         {
-            _gateway = gateway;
+            _getEmployeesService = getEmployeesService;
+            _employeeValidationService = employeeValidationService;
         }
 
-        public async Task<IEnumerable<Employee>> GetEmployees(AuthorizedUser user, string organizationId)
-        {
-            await user.EnsureCanAccessOrganization(organizationId);
-            return await _gateway.GetEmployees(organizationId);
-        }
 
+        public Task<IEnumerable<Employee>> GetEmployees(IAuthorization user, string organizationId) =>
+            _getEmployeesService.GetEmployees(user, organizationId);
+
+        public Task<IEmployeeAuthorization> ValidatePin(IAuthorization user, EmployeePin employeePin) =>
+            _employeeValidationService.ValidatePin(user, employeePin);
     }
 }

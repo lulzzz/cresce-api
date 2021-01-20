@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Cresce.Core.Employees;
+using Cresce.Core.Employees.GetEmployees;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cresce.Core.Sql.Employees
@@ -10,36 +11,22 @@ namespace Cresce.Core.Sql.Employees
     {
         private readonly CresceContext _context;
 
-        public GetEmployeesGateway(CresceContext context)
+        public GetEmployeesGateway(CresceContext context) => _context = context;
+
+        public async Task<IEnumerable<Employee>> GetEmployees(string organizationId)
         {
-            _context = context;
-        }
-        public Task<IEnumerable<Employee>> GetEmployees(string organizationId)
-        {
-            return Task.FromResult(_context
+            var employeesModels = await _context
                 .Set<EmployeeModel>()
-                .AsSingleQuery()
                 .Where(e => e.OrganizationId == organizationId)
-                .AsEnumerable()
-                .Select(e => e.ToEmployee()));
+                .ToListAsync();
+
+            return employeesModels.Select(e => e.ToEmployee());
         }
-    }
 
-    internal class EmployeeModel
-    {
-        public string Id { get; set; }
-        public string Title { get; set; }
-        public byte[] Image { get; set; }
-        public string OrganizationId { get; set; }
-
-        public Employee ToEmployee()
+        public async Task<Employee> GetEmployeeById(string employeeId)
         {
-            return new Employee
-            {
-                Name = Id,
-                Title = Title,
-                Image = new Image(Image)
-            };
+            var model = await _context.Set<EmployeeModel>().FindAsync(employeeId) ?? new EmployeeModel();
+            return model.ToEmployee();
         }
     }
 }

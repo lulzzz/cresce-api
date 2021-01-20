@@ -70,17 +70,17 @@ namespace Cresce.Api.Tests
         {
             var client = GetClient();
 
-            var token = MakeTokenFactory()!.MakeInvalidToken();
+            var token = MakeTokenFactory()!.MakeUnauthorizedUser();
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.ToString());
 
             return client;
         }
 
-        protected ITokenFactory MakeTokenFactory()
+        protected IAuthorizationFactory MakeTokenFactory()
         {
             var scope = _factory.Services.CreateScope();
-            return scope.ServiceProvider.GetService<ITokenFactory>()!;
+            return scope.ServiceProvider.GetService<IAuthorizationFactory>()!;
         }
 
         protected async Task<HttpClient> GetAuthenticatedClient()

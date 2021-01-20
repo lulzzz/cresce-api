@@ -20,10 +20,12 @@ namespace Cresce.Api.Controllers.Employees
         }
 
         [HttpGet("organization/{organization}/[controller]")]
-        public async Task<IEnumerable<EmployeeModel>> GetEmployees(AuthorizedUser user, string organization)
+        public async Task<IEnumerable<EmployeeModel>> GetEmployees(IAuthorization user, string organization)
         {
             return (await _service.GetEmployees(user, organization))
                 .Select(employee => new EmployeeModel(employee));
         }
+
+
     }
 }

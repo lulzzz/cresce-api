@@ -12,24 +12,24 @@ namespace Cresce.Api
         {
             var scope = context.Services.CreateScope();
 
-            return context.Metadata.ModelType == typeof(AuthorizedUser)
-                ? new AuthorizedUserBinder(scope.ServiceProvider.GetService<ITokenFactory>()!)
+            return context.Metadata.ModelType == typeof(IAuthorization)
+                ? new AuthorizedUserBinder(scope.ServiceProvider.GetService<IAuthorizationFactory>()!)
                 : null;
         }
 
         private class AuthorizedUserBinder : IModelBinder
         {
-            private readonly ITokenFactory _tokenFactory;
+            private readonly IAuthorizationFactory _authorizationFactory;
 
-            public AuthorizedUserBinder(ITokenFactory tokenFactory)
+            public AuthorizedUserBinder(IAuthorizationFactory authorizationFactory)
             {
-                _tokenFactory = tokenFactory;
+                _authorizationFactory = authorizationFactory;
             }
 
             public Task BindModelAsync(ModelBindingContext bindingContext)
             {
                 bindingContext.Result = ModelBindingResult.Success(
-                    bindingContext.HttpContext.Request.GetUser(_tokenFactory)
+                    bindingContext.HttpContext.Request.GetUser(_authorizationFactory)
                 );
 
                 return Task.CompletedTask;

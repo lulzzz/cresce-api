@@ -4,14 +4,14 @@ using NUnit.Framework;
 
 namespace Cresce.Core.Tests.Authentication
 {
-    public class TokenFactoryTests : ServicesTests<ITokenFactory>
+    public class TokenFactoryTests : ServicesTests<IAuthorizationFactory>
     {
         [Test]
         public void Making_a_token_from_a_user_it_is_not_expired()
         {
             var factory = MakeService();
 
-            var token = factory.MakeToken(new BasicUser {Id = "myUser"});
+            var token = factory.GetAuthorizedUser(new AdminUser {Id = "myUser"});
 
             Assert.That(token.IsExpired, Is.False);
         }
@@ -21,8 +21,8 @@ namespace Cresce.Core.Tests.Authentication
         {
             var factory = MakeService();
 
-            var token = factory.MakeToken(new BasicUser {Id = "myUser"});
-            var roundTripToken = factory.Decode(token.ToString());
+            var token = factory.GetAuthorizedUser(new AdminUser {Id = "myUser"});
+            var roundTripToken = factory.Decode(token.ToString()!);
 
             Assert.Multiple(() =>
             {
@@ -61,27 +61,12 @@ namespace Cresce.Core.Tests.Authentication
         {
             var factory = MakeService();
 
-            var token = factory.MakeToken(new BasicUser {Id = "myUser"});
+            var token = factory.GetAuthorizedUser(new AdminUser {Id = "myUser"});
 
             Assert.Multiple(() =>
             {
                 Assert.That(token.IsExpired, Is.False);
                 Assert.That(token.UserId, Is.EqualTo("myUser"));
-            });
-        }
-
-        [Test]
-        public void Getting_basic_user_from_valid_token_returns_the_user_role_as_basic()
-        {
-            var factory = MakeService();
-
-            var token = factory.MakeToken(new BasicUser {Id = "myUser"});
-
-            Assert.Multiple(() =>
-            {
-                Assert.That(token.IsExpired, Is.False);
-                Assert.That(token.UserId, Is.EqualTo("myUser"));
-                Assert.That(token.Role, Is.EqualTo("Basic"));
             });
         }
 
@@ -90,7 +75,7 @@ namespace Cresce.Core.Tests.Authentication
         {
             var factory = MakeService();
 
-            var token = factory.MakeToken(new AdminUser {Id = "myUser"});
+            var token = factory.GetAuthorizedUser(new AdminUser {Id = "myUser"});
 
             Assert.Multiple(() =>
             {
