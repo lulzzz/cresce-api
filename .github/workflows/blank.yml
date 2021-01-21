@@ -15,8 +15,8 @@ jobs:
       - name: Bump versions
         run: |
           ls
-          ls Cresce.api
-          ./Cresce.api/bump-version.sh
+          ls Cresce.Api
+          ./Cresce.Api/bump-version.sh
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
