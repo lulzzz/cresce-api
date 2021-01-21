@@ -11,14 +11,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      
       - uses: actions/checkout@v2
-        
-      - name: Set current date as env variable
-        run: echo "NOW::$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
-
-      - name: Set property string value in a json file
-        uses: benday-inc/set-property-value-in-appsettings@v1.1
+      
+      - name: Bump version
+        uses: remorses/bump-version@js
         with:
-          keyname1: 'Version'
-          valueToSet: '$NOW'
+            version_file: ./Cresce.Api/appsettings.json
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+           
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Bump Version
 
