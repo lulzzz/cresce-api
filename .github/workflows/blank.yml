@@ -4,8 +4,6 @@ on:
   pull_request:
     branches: [ master ]
 
-  workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,7 +13,10 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Bump versions
-        run: ./Cresce.api/bump-version.sh
+        run: |
+          ls
+          ls Cresce.api
+          ./Cresce.api/bump-version.sh
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
