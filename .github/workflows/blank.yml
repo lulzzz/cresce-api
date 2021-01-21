@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        
+      - name: Set current date as env variable
+        run: echo "NOW::$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+
+      - name: Set property string value in a json file
+        uses: benday-inc/set-property-value-in-appsettings@v1.1
+        with:
+          keyname1: 'Version'
+          valueToSet: '$NOW'
+
