@@ -11,15 +11,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      
+
       - uses: actions/checkout@v2
-      
+
       - name: Bump versions
-        uses: SiqiLu/dotnet-bump-version@master
-        with:
-          version_files: "**/*.csproj"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-           
+        run: ./Cresce.api/bump-version.sh
+
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Bump Version
