@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function getVersion {
-input="appsettings.json"
+input="Cresce.Api/appsettings.json"
 while IFS= read -r line
 do
   if [[ $line == *"Version"* ]]; then
@@ -35,4 +35,4 @@ newVersion=$(echo $(increment_version $version))
 
 echo "$version > $newVersion"
 
-sed "s/$version/$newVersion/" appsettings.json > changed.txt && mv changed.txt appsettings.json
+sed "s/$version/$newVersion/" Cresce.Api/appsettings.json > changed.txt && mv changed.txt Cresce.Api/appsettings.json
