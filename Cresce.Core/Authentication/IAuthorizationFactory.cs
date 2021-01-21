@@ -5,10 +5,11 @@ namespace Cresce.Core.Authentication
 {
     public interface IAuthorizationFactory
     {
-        IAuthorization Decode(string token);
-        IAuthorization GetAuthorizedUser(User user, DateTime? dateTime = null);
-        IAuthorization MakeUnauthorizedUser();
+        IAuthorization DecodeAuthorization(string token);
+        IEmployeeAuthorization DecodeEmployeeAuthorization(string token);
+        IAuthorization MakeAuthorization(User user, DateTime? dateTime = null);
+        IAuthorization MakeExpiredAuthorization();
         IEmployeeAuthorization GetAuthorizedEmployee(IAuthorization user, string employeeId);
-        IEmployeeAuthorization MakeUnauthorizedEmployee();
+        IEmployeeAuthorization MakeExpiredEmployeeAuthorization();
     }
 }

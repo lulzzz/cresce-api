@@ -11,7 +11,7 @@ namespace Cresce.Core.Tests.Authentication
         {
             var factory = MakeService();
 
-            var token = factory.GetAuthorizedUser(new AdminUser {Id = "myUser"});
+            var token = factory.MakeAuthorization(new AdminUser {Id = "myUser"});
 
             Assert.That(token.IsExpired, Is.False);
         }
@@ -21,8 +21,8 @@ namespace Cresce.Core.Tests.Authentication
         {
             var factory = MakeService();
 
-            var token = factory.GetAuthorizedUser(new AdminUser {Id = "myUser"});
-            var roundTripToken = factory.Decode(token.ToString()!);
+            var token = factory.MakeAuthorization(new AdminUser {Id = "myUser"});
+            var roundTripToken = factory.DecodeAuthorization(token.ToString()!);
 
             Assert.Multiple(() =>
             {
@@ -36,7 +36,7 @@ namespace Cresce.Core.Tests.Authentication
         {
             var factory = MakeService();
 
-            var token = factory.Decode("Invalid Token");
+            var token = factory.DecodeAuthorization("Invalid Token");
 
             Assert.That(token.IsExpired, Is.True);
         }
@@ -46,14 +46,14 @@ namespace Cresce.Core.Tests.Authentication
         {
             var factory = MakeService();
 
-            var token = factory.Decode("Invalid Token");
+            var token = factory.DecodeAuthorization("Invalid Token");
 
             Assert.That(token.IsExpired, Is.True);
             var exception = Assert.Catch<UnauthorizedException>(() =>
                 Assert.That(token.UserId, Is.Not.Null)
             );
 
-            Assert.That(exception.Message, Is.EqualTo("Unable to access resource, token expired."));
+            Assert.That(exception.Message, Is.EqualTo("Authorization has expired."));
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace Cresce.Core.Tests.Authentication
         {
             var factory = MakeService();
 
-            var token = factory.GetAuthorizedUser(new AdminUser {Id = "myUser"});
+            var token = factory.MakeAuthorization(new AdminUser {Id = "myUser"});
 
             Assert.Multiple(() =>
             {
@@ -75,7 +75,7 @@ namespace Cresce.Core.Tests.Authentication
         {
             var factory = MakeService();
 
-            var token = factory.GetAuthorizedUser(new AdminUser {Id = "myUser"});
+            var token = factory.MakeAuthorization(new AdminUser {Id = "myUser"});
 
             Assert.Multiple(() =>
             {

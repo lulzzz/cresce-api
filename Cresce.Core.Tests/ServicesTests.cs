@@ -54,20 +54,43 @@ namespace Cresce.Core.Tests
 
         protected IAuthorization GetAuthorizedUser()
         {
-            return GetService<IAuthorizationFactory>().GetAuthorizedUser(new AdminUser
+            return GetService<IAuthorizationFactory>().MakeAuthorization(new AdminUser
             {
                 Id = "myUser"
             });
         }
 
-        protected IAuthorization GetUnknownUser()
+        protected IEmployeeAuthorization GetEmployeeAuthorization()
         {
-            return GetService<IAuthorizationFactory>().GetAuthorizedUser(new UnknownUser());
+            var factory = GetService<IAuthorizationFactory>();
+            return factory.GetAuthorizedEmployee(
+                factory.MakeAuthorization(new AdminUser {Id = "myUser"}),
+                "Ricardo Nunes"
+            );
         }
 
-        protected IAuthorization GetExpiredUser()
+        protected IEmployeeAuthorization GetInvalidEmployeeAuthorization()
         {
-            return GetService<IAuthorizationFactory>().MakeUnauthorizedUser();
+            var factory = GetService<IAuthorizationFactory>();
+            return factory.GetAuthorizedEmployee(
+                factory.MakeAuthorization(new AdminUser {Id = "myUser"}),
+                string.Empty
+            );
+        }
+
+        protected IEmployeeAuthorization GetExpiredEmployeeAuthorization()
+        {
+            return GetService<IAuthorizationFactory>().MakeExpiredEmployeeAuthorization();
+        }
+
+        protected IAuthorization GetUnknownUser()
+        {
+            return GetService<IAuthorizationFactory>().MakeAuthorization(new UnknownUser());
+        }
+
+        protected IAuthorization GetExpiredAuthorization()
+        {
+            return GetService<IAuthorizationFactory>().MakeExpiredAuthorization();
         }
 
         private TService GetService<TService>()

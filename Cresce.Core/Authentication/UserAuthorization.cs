@@ -8,12 +8,12 @@ using Cresce.Core.Users;
 
 namespace Cresce.Core.Authentication
 {
-    internal class AuthorizedUser : IAuthorization
+    internal class UserAuthorization : IAuthorization
     {
         private readonly JwtSecurityToken _token;
         private readonly IGetUserOrganizationsGateway _gateway;
 
-        internal AuthorizedUser(JwtSecurityToken token, IGetUserOrganizationsGateway gateway)
+        internal UserAuthorization(JwtSecurityToken token, IGetUserOrganizationsGateway gateway)
         {
             _token = token;
             _gateway = gateway;
@@ -26,15 +26,17 @@ namespace Cresce.Core.Authentication
 
         protected Claim GetClaim(string type)
         {
-            EnsureTokenIsStillValid();
+            EnsureIsNotExpired();
             return _token.Claims.FirstOrDefault(e => e.Type == type)
                    ?? new Claim("unknown", "");
         }
 
-        private void EnsureTokenIsStillValid()
+        public void EnsureIsNotExpired()
         {
-            if (!IsExpired) return;
-            throw new UnauthorizedException("Unable to access resource, token expired.");
+            if (IsExpired)
+            {
+                throw new UnauthorizedException($"Authorization has expired.");
+            }
         }
 
         public override string ToString() => new JwtSecurityTokenHandler().WriteToken(_token);
@@ -54,9 +56,10 @@ namespace Cresce.Core.Authentication
     public interface IEmployeeAuthorization : IAuthorization
     {
         string EmployeeId { get; }
+        void EnsureIsValid();
     }
 
-    internal class AuthorizedEmployee : AuthorizedUser, IEmployeeAuthorization
+    internal class AuthorizedEmployee : UserAuthorization, IEmployeeAuthorization
     {
         internal AuthorizedEmployee(JwtSecurityToken token, IGetUserOrganizationsGateway gateway)
             : base(token, gateway)
@@ -64,6 +67,13 @@ namespace Cresce.Core.Authentication
         }
 
         public string EmployeeId => GetClaim(ClaimTypes.UserData).Value;
+        public void EnsureIsValid()
+        {
+            if (string.IsNullOrEmpty(EmployeeId))
+            {
+                throw new UnauthorizedException($"Authorization has expired.");
+            }
+        }
     }
 
     public class UnauthorizedException : Exception

@@ -70,7 +70,7 @@ namespace Cresce.Api.Tests
         {
             var client = GetClient();
 
-            var token = MakeTokenFactory()!.MakeUnauthorizedUser();
+            var token = MakeTokenFactory()!.MakeExpiredAuthorization();
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.ToString());
 
@@ -89,6 +89,18 @@ namespace Cresce.Api.Tests
             var login = await client.Login();
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", login.Token);
+
+            return client;
+        }
+
+        protected async Task<HttpClient> GetAuthenticatedEmployeeClient()
+        {
+            var client = GetClient();
+            var login = await client.Login();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", login.Token);
+
+            var employeeLogin = await client.LoginEmployee();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", employeeLogin.Token);
 
             return client;
         }
