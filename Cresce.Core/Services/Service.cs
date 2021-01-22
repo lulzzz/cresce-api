@@ -1,5 +1,5 @@
 
-namespace Cresce.Core.Services.GetServices
+namespace Cresce.Core.Services
 {
     public record Service
     {

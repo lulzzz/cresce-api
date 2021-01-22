@@ -1,5 +1,7 @@
 using Cresce.Core.Authentication;
+using Cresce.Core.Customers;
 using Cresce.Core.Employees;
+using Cresce.Core.GetEntities;
 using Cresce.Core.Organizations;
 using Cresce.Core.Services;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +20,7 @@ namespace Cresce.Core
         {
             serviceCollection.RegisterModule<EmployeesModule>();
             serviceCollection.RegisterModule<ServicesModule>();
+            serviceCollection.RegisterModule<CustomersModule>();
             serviceCollection.AddTransient<ILoginService, LoginService>();
             serviceCollection.AddTransient<IOrganizationService, OrganizationService>();
             serviceCollection.AddTransient<IAuthorizationFactory, AuthorizationFactory>();
@@ -30,6 +33,11 @@ namespace Cresce.Core
         public static void RegisterModule<TModule>(this IServiceCollection serviceCollection) where TModule : IServicesModule, new()
         {
             new TModule().RegisterServices(serviceCollection);
+        }
+
+        public static void RegisterGetEntities<TEntity>(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddTransient<IGetEntitiesService<TEntity>, GetEntitiesService<TEntity>>();
         }
     }
 
