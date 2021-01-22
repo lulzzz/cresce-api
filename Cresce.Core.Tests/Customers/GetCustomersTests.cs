@@ -12,7 +12,7 @@ namespace Cresce.Core.Tests.Customers
         {
             var services = MakeService();
 
-            var employees = await services.GetCustomers(GetEmployeeAuthorization());
+            var entities = await services.GetCustomers(GetEmployeeAuthorization());
 
             CollectionAssert.AreEqual(new []
             {
@@ -22,7 +22,7 @@ namespace Cresce.Core.Tests.Customers
                     Name = "Diogo Quintas",
                     Image = GetSampleImage(),
                 },
-            }, employees);
+            }, entities);
         }
 
         [Test]
@@ -36,7 +36,7 @@ namespace Cresce.Core.Tests.Customers
         }
 
         [Test]
-        public void Getting_customers_with_authentication_without_employee_id_throws_exception()
+        public void Getting_customers_with_invalid_authentication_throws_exception()
         {
             var services = MakeService();
 
