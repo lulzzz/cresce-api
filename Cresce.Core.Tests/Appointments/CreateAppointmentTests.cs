@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cresce.Core.Appointments;
 using Cresce.Core.Authentication;
@@ -17,14 +16,17 @@ namespace Cresce.Core.Tests.Appointments
             {
                 Hours = 2.5,
                 CustomerId = 1,
-                EmployeeId = 1,
                 ServiceId = 1,
                 StartedAt = new DateTime(2020, 02, 12)
             };
 
             await services.CreateAppointment(appointment, GetEmployeeAuthorization());
 
-            await AssertAppointmentIsStored(services, appointment with {Id = 2});
+            await AssertAppointmentIsStored(services, appointment with
+            {
+                Id = 2,
+                EmployeeId = 1
+            });
         }
 
         [Test]
@@ -35,14 +37,17 @@ namespace Cresce.Core.Tests.Appointments
             {
                 Hours = 2.5,
                 CustomerId = 1,
-                EmployeeId = 1,
                 ServiceId = 1,
                 StartedAt = new DateTime(2020, 02, 12)
             };
 
             var createdAppointment = await services.CreateAppointment(appointment, GetEmployeeAuthorization());
 
-            Assert.That(createdAppointment, Is.EqualTo(appointment with {Id = 2}));
+            Assert.That(createdAppointment, Is.EqualTo(appointment with
+            {
+                Id = 2,
+                EmployeeId = 1
+            }));
         }
 
         [Test]

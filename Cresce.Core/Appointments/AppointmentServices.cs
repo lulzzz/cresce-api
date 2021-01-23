@@ -26,6 +26,11 @@ namespace Cresce.Core.Appointments
         {
             authorization.EnsureIsValid();
 
+            appointment = appointment with
+            {
+                EmployeeId = authorization.EmployeeId
+            };
+
             return appointment with
             {
                 Id = await _createEntityGateway.Create(appointment)
