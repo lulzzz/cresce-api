@@ -26,6 +26,7 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Bump Version
+          commit_user_name: org-bot
 
   build:
     runs-on: ubuntu-latest
@@ -33,6 +34,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.head_ref }}
 
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
