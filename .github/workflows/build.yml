@@ -2,12 +2,36 @@ name: Build
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [ master, develop ]
+  push:
+    branches: [ develop ]
 
 jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Bump versions
+        run: ./bump-version.sh
+
+      - name: get version
+        id: version
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: 'Cresce.Api/appsettings.json'
+          prop_path: 'Version'
+
+      - run: echo ${{steps.version.outputs.prop}}
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Bump Version
+
   build:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, 'Bump Version')"
+    needs: [ bump-version ]
 
     steps:
     - uses: actions/checkout@v2
