@@ -22,6 +22,7 @@ namespace Cresce.Api.Tests.Controllers
                 {
                     new EmployeeModel
                     {
+                        Id = 1,
                         Name = "Ricardo Nunes",
                         Title = "Engineer",
                         Image = GetSampleImage().ToBase64()
