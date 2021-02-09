@@ -26,5 +26,12 @@ namespace Cresce.Api.Controllers
                 // ConnectionString = _settings.ConnectionString,
                 // EnvConnectionString = Environment.GetEnvironmentVariable("SQLCONNSTR_CONNECTION_STRING")
             };
+
+        [HttpGet("logs")]
+        public IActionResult Logs()
+        {
+            var virtualPath = $"Logs/logs-{DateTime.Now.Date:yyyyMMdd}.txt";
+            return Content(System.IO.File.ReadAllText(virtualPath), "text/plain");
+        }
     }
 }

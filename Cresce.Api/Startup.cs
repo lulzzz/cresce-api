@@ -99,7 +99,7 @@ namespace Cresce.Api
                 // scope.ServiceProvider.GetService<CresceContext>()!.Seed();
             }
 
-            loggerFactory.AddFile("Logs/myapp-{Date}.txt");
+            loggerFactory.AddFile("Logs/logs.txt");
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
