@@ -14,6 +14,9 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace System.Runtime.CompilerServices
@@ -49,6 +52,7 @@ namespace Cresce.Api
                     options.JsonSerializerOptions.WriteIndented = true;
                 });
 
+            services.AddLogging();
             services.AddMvc(options =>
             {
                 options.Filters.Add(new HttpExceptionFilter());
@@ -82,7 +86,10 @@ namespace Cresce.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(
+            IApplicationBuilder app,
+            IWebHostEnvironment env,
+            ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -92,6 +99,7 @@ namespace Cresce.Api
                 // scope.ServiceProvider.GetService<CresceContext>()!.Seed();
             }
 
+            loggerFactory.AddFile("Logs/myapp-{Date}.txt");
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
@@ -103,7 +111,6 @@ namespace Cresce.Api
     public class LogRequestFilter : ActionFilterAttribute
     {
         private const int ReadChunkBufferLength = 4096;
-
 
         public override void OnResultExecuted(ResultExecutedContext context)
         {
