@@ -24,7 +24,7 @@ namespace Cresce.Api.Controllers
                 Health = HealthStatus.Healthy,
                 ApiVersion = _settings.Version,
                 ConnectionString = _settings.ConnectionString,
-                // EnvConnectionString = Environment.GetEnvironmentVariable("SQLCONNSTR_CONNECTION_STRING")
+                EnvConnectionString = _settings.EnvConnectionString
             };
 
         [HttpGet("logs")]
