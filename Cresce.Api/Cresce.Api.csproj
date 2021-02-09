@@ -9,11 +9,16 @@
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.0" />
+      <PackageReference Include="Serilog.Extensions.Logging.File" Version="2.0.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Cresce.Core.Sql\Cresce.Core.Sql.csproj" />
       <ProjectReference Include="..\Cresce.Core\Cresce.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Logs" />
     </ItemGroup>
 
 
