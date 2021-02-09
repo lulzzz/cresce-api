@@ -32,15 +32,6 @@ jobs:
           alienengineer/cresce:latest
           alienengineer/cresce:1.0.0
 
-    - name: Build Docker image
-      uses: docker/build-push-action@v2.1.0
-      with:
-        file: ./Dockerfile
-        push: false
-        tags: |
-          alienengineer/cresce:latest
-          alienengineer/cresce:1.0.0
-
     - name: Trigger Azure Deploy
       uses: muinmomin/webhook-action@v1.0.0
       with:
