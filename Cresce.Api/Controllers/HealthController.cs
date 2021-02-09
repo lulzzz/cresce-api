@@ -23,7 +23,7 @@ namespace Cresce.Api.Controllers
                 ServerTime = DateTime.UtcNow,
                 Health = HealthStatus.Healthy,
                 ApiVersion = _settings.Version,
-                // ConnectionString = _settings.ConnectionString,
+                ConnectionString = _settings.ConnectionString,
                 // EnvConnectionString = Environment.GetEnvironmentVariable("SQLCONNSTR_CONNECTION_STRING")
             };
 
