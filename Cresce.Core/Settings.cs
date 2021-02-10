@@ -21,6 +21,9 @@ namespace Cresce.Core
         public string Version => _configuration != null ? _configuration["Version"] : string.Empty;
 
         public string AppKey => _configuration != null ? _configuration["AppKey"] : "fedaf7d8863b48e197b9287d492b708e";
+
         public string EnvConnectionString => Environment.GetEnvironmentVariable("CRESCE_CONNECTION_STRING") ?? string.Empty;
+
+
     }
 }
