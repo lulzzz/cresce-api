@@ -65,6 +65,11 @@ namespace Cresce.Api
             ServicesConfiguration.RegisterServices(services);
             GatewaysConfiguration.RegisterDbContext(services, settings.ConnectionString);
 
+            Console.WriteLine(settings.AppKey);
+            Console.WriteLine(settings.Version);
+            Console.WriteLine(settings.ConnectionString);
+            Console.WriteLine(settings.EnvConnectionString);
+
             services
                 .AddAuthentication(x =>
                 {
