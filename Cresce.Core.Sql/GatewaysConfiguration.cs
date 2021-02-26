@@ -1,3 +1,4 @@
+using System.Data.Common;
 using Cresce.Core.Appointments;
 using Cresce.Core.Customers;
 using Cresce.Core.Employees.GetEmployees;
@@ -12,6 +13,7 @@ using Cresce.Core.Sql.Organizations;
 using Cresce.Core.Sql.Services;
 using Cresce.Core.Sql.Users;
 using Cresce.Core.Users;
+using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,9 +33,38 @@ namespace Cresce.Core.Sql
             RegisterCreateOperations<AppointmentDto, Appointment>(serviceCollection);
         }
 
+        private static DbConnection CreateInMemoryDatabase()
+        {
+            var connection = new SqliteConnection("Filename=:memory:");
+
+            connection.Open();
+
+            return connection;
+        }
+
         public static void RegisterDbContext(IServiceCollection serviceCollection, string connectionString)
         {
-            serviceCollection.AddDbContext<CresceContext>(builder => { builder.UseSqlServer(connectionString); });
+            if (connectionString == "memory")
+            {
+                serviceCollection.AddScoped(_ =>
+                {
+                    var connection = CreateInMemoryDatabase();
+                    var options = new DbContextOptionsBuilder<CresceContext>()
+                        .UseSqlite(connection)
+                        .Options;
+
+                    var context = new CresceContext(options);
+                    context.DeleteDatabase();
+                    context.Seed();
+
+                    return options;
+                });
+                serviceCollection.AddDbContext<CresceContext>();
+            }
+            else
+            {
+                serviceCollection.AddDbContext<CresceContext>(builder => { builder.UseSqlServer(connectionString); });
+            }
         }
 
         private static void RegisterEmployeeGateways(IServiceCollection serviceCollection)
