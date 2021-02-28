@@ -22,7 +22,7 @@ namespace Cresce.Core.Sql
             modelBuilder.Entity<OrganizationDto>().ToTable("Organizations");
             modelBuilder.Entity<EmployeeDto>().ToTable("Employees");
             modelBuilder.Entity<ServiceDto>().ToTable("Services");
-            modelBuilder.Entity<CustomerDto>().ToTable("Patients");
+            modelBuilder.Entity<CustomerDto>().ToTable("Customers");
             modelBuilder.Entity<AppointmentDto>().ToTable("Appointments");
         }
 
