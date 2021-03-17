@@ -66,6 +66,9 @@ create table Services
     unique (Name)
 )
 
+INSERT INTO Services (Name, Value)
+VALUES ('Development', 30.0)
+
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Customers]') AND type in (N'U'))
     DROP TABLE [dbo].[Customers]
 GO
@@ -81,6 +84,8 @@ create table Customers
     unique (Name)
 )
 
+INSERT INTO Customers (Name)
+VALUES ('Diogo Quintas')
 
 IF EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Appointments]') AND type in (N'U'))
     DROP TABLE [dbo].[Appointments]
