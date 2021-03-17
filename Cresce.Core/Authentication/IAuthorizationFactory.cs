@@ -1,4 +1,5 @@
 using System;
+using Cresce.Core.Employees.GetEmployees;
 using Cresce.Core.Users;
 
 namespace Cresce.Core.Authentication
@@ -9,7 +10,7 @@ namespace Cresce.Core.Authentication
         IEmployeeAuthorization DecodeEmployeeAuthorization(string token);
         IAuthorization MakeAuthorization(User user, DateTime? dateTime = null);
         IAuthorization MakeExpiredAuthorization();
-        IEmployeeAuthorization GetAuthorizedEmployee(IAuthorization user, int employeeId);
+        IEmployeeAuthorization GetAuthorizedEmployee(IAuthorization user, Employee employee);
         IEmployeeAuthorization MakeExpiredEmployeeAuthorization();
     }
 }

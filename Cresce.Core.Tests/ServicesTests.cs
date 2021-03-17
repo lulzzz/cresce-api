@@ -1,5 +1,6 @@
 using System.Data.Common;
 using Cresce.Core.Authentication;
+using Cresce.Core.Employees.GetEmployees;
 using Cresce.Core.Sql;
 using Cresce.Core.Users;
 using Microsoft.Data.Sqlite;
@@ -60,7 +61,7 @@ namespace Cresce.Core.Tests
             var factory = GetService<IAuthorizationFactory>();
             return factory.GetAuthorizedEmployee(
                 factory.MakeAuthorization(new AdminUser {Id = "myUser"}),
-                1
+                new Employee {Id = 1}
             );
         }
 
@@ -69,7 +70,7 @@ namespace Cresce.Core.Tests
             var factory = GetService<IAuthorizationFactory>();
             return factory.GetAuthorizedEmployee(
                 factory.MakeAuthorization(new AdminUser {Id = "myUser"}),
-                -1
+                new Employee {Id = -1}
             );
         }
 

@@ -9,6 +9,8 @@ namespace Cresce.Core.Employees.GetEmployees
         public string Title { get; init; } = string.Empty;
         public Image Image { get; init; } = new();
         public string Pin { get; init; } = string.Empty;
+        public string Color { get; set; } = string.Empty;
+        public string OrganizationId { get; set; } = string.Empty;
 
         public bool Verify(EmployeePin employeePin)
         {

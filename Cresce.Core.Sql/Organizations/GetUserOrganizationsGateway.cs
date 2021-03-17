@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Cresce.Core.Organizations;
 using Cresce.Core.Sql.GetEntities;
-using Microsoft.EntityFrameworkCore;
 
 namespace Cresce.Core.Sql.Organizations
 {

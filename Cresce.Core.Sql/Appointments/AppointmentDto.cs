@@ -1,44 +1,49 @@
 using System;
-using Cresce.Core.Sessions;
+using Cresce.Core.Appointments;
 
-namespace Cresce.Core.Sql.Sessions
+namespace Cresce.Core.Sql.Appointments
 {
-    internal class SessionDto : IUnwrap<Session>, IWrap<Session>, IHaveAutoIdentity
+    public class AppointmentDto : IUnwrap<Appointment>, IWrap<Appointment>, IHaveAutoIdentity
     {
         public int Id { get; set; }
-        public DateTime StartedAt { get; set; }
         public int ServiceId { get; set; }
         public int EmployeeId { get; set; }
         public int CustomerId { get; set; }
-        public double Hours { get; set; }
-        public double Discount { get; set; }
-        public double Value { get; set; }
+        public DateTime From { get; set; }
+        public DateTime To { get; set; }
+        public string? RecurrenceType { get; set; }
+        public string? RecurrenceWeekDays { get; set; }
+        public DateTime? RecurrenceStart { get; set; }
+        public DateTime? RecurrenceEnd { get; set; }
 
-        public Session Unwrap()
+        public Appointment Unwrap()
         {
-            return new Session
+            return new Appointment
             {
                 Id = Id,
-                StartedAt = StartedAt,
                 ServiceId = ServiceId,
-                EmployeeId = EmployeeId,
                 CustomerId = CustomerId,
-                Hours = Hours,
-                Discount = Discount,
-                Value = Value
+                EmployeeId = EmployeeId,
+                From = From,
+                To = To,
+                Recurrence = UnwrapRecurrence()
             };
         }
 
-        public void Wrap(Session entity)
+        private Recurrence? UnwrapRecurrence()
         {
-            Id = entity.Id;
-            StartedAt = entity.StartedAt;
-            ServiceId = entity.ServiceId;
-            EmployeeId = entity.EmployeeId;
-            CustomerId = entity.CustomerId;
-            Hours = entity.Hours;
-            Discount = entity.Discount;
-            Value = entity.Value;
+            return RecurrenceType == null ? null : new Recurrence
+            {
+                Type = RecurrenceType,
+                WeekDays = WeekDays.FromNumbers(RecurrenceWeekDays ?? ""),
+                Start = RecurrenceStart ?? From,
+                End = RecurrenceEnd,
+            };
+        }
+
+        public void Wrap(Appointment entity)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

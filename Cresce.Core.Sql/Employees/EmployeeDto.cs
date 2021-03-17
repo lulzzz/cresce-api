@@ -10,6 +10,7 @@ namespace Cresce.Core.Sql.Employees
         public string OrganizationId { get; set; }
         public string Pin { get; set; }
         public string Name { get; set; }
+        public string Color { get; set; }
 
         public Employee Unwrap()
         {
@@ -19,7 +20,9 @@ namespace Cresce.Core.Sql.Employees
                 Name = Name,
                 Title = Title,
                 Image = new Image(Image),
-                Pin = Pin
+                Pin = Pin,
+                Color = Color,
+                OrganizationId = OrganizationId,
             };
         }
 

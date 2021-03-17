@@ -23,7 +23,9 @@ namespace Cresce.Core.Tests.Employees
                     Name = "Ricardo Nunes",
                     Title = "Engineer",
                     Image = GetSampleImage(),
-                    Pin = "1234"
+                    Pin = "1234",
+                    Color = "0xFF2196F3",
+                    OrganizationId = "myOrganization",
                 },
             }, entities);
         }
