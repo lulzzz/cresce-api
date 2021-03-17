@@ -3,15 +3,15 @@ using Cresce.Api.Models;
 
 namespace Cresce.Api.Tests.Controllers.EmployeeScope
 {
-    internal class AppointmentsRequests : ControllerRequests<AppointmentModel>
+    internal class SessionsRequests : ControllerRequests<SessionModel>
     {
-        public override string EntitiesUrl => "api/v1/appointments";
+        public override string EntitiesUrl => "api/v1/Sessions";
 
-        public override AppointmentModel[] GetExpectedList()
+        public override SessionModel[] GetExpectedList()
         {
             return new[]
             {
-                new AppointmentModel
+                new SessionModel
                 {
                     Id = 1,
                     Discount = 10.0,

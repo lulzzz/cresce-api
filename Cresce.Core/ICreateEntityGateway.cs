@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Cresce.Core.Appointments
+namespace Cresce.Core
 {
     public interface ICreateEntityGateway<in TEntity>
     {

@@ -1,5 +1,5 @@
 using System;
-using Cresce.Core.Sql.Appointments;
+using Cresce.Core.Sql.Sessions;
 using Cresce.Core.Sql.Customers;
 using Cresce.Core.Sql.Employees;
 using Cresce.Core.Sql.Organizations;
@@ -23,7 +23,7 @@ namespace Cresce.Core.Sql
             modelBuilder.Entity<EmployeeDto>().ToTable("Employees");
             modelBuilder.Entity<ServiceDto>().ToTable("Services");
             modelBuilder.Entity<CustomerDto>().ToTable("Customers");
-            modelBuilder.Entity<AppointmentDto>().ToTable("Appointments");
+            modelBuilder.Entity<SessionDto>().ToTable("Sessions");
         }
 
         public void DeleteDatabase() => Database.EnsureDeleted();
@@ -53,7 +53,7 @@ namespace Cresce.Core.Sql
                 Name = "Diogo Quintas",
                 Image = new Image(GetSampleImage()).ToByteArray(),
             });
-            Add(new AppointmentDto
+            Add(new SessionDto
             {
                 Discount = 10.0,
                 Hours = 3.5,

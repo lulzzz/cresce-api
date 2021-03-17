@@ -1,9 +1,9 @@
 using System;
-using Cresce.Core.Appointments;
+using Cresce.Core.Sessions;
 
-namespace Cresce.Core.Sql.Appointments
+namespace Cresce.Core.Sql.Sessions
 {
-    internal class AppointmentDto : IUnwrap<Appointment>, IWrap<Appointment>, IHaveAutoIdentity
+    internal class SessionDto : IUnwrap<Session>, IWrap<Session>, IHaveAutoIdentity
     {
         public int Id { get; set; }
         public DateTime StartedAt { get; set; }
@@ -14,9 +14,9 @@ namespace Cresce.Core.Sql.Appointments
         public double Discount { get; set; }
         public double Value { get; set; }
 
-        public Appointment Unwrap()
+        public Session Unwrap()
         {
-            return new Appointment
+            return new Session
             {
                 Id = Id,
                 StartedAt = StartedAt,
@@ -29,7 +29,7 @@ namespace Cresce.Core.Sql.Appointments
             };
         }
 
-        public void Wrap(Appointment entity)
+        public void Wrap(Session entity)
         {
             Id = entity.Id;
             StartedAt = entity.StartedAt;

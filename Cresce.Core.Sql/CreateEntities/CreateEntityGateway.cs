@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Cresce.Core.Appointments;
 
 namespace Cresce.Core.Sql.CreateEntities
 {

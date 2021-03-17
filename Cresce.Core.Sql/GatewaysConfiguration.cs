@@ -1,10 +1,10 @@
 using System.Data.Common;
-using Cresce.Core.Appointments;
 using Cresce.Core.Customers;
 using Cresce.Core.Employees.GetEmployees;
 using Cresce.Core.Organizations;
 using Cresce.Core.Services;
-using Cresce.Core.Sql.Appointments;
+using Cresce.Core.Sessions;
+using Cresce.Core.Sql.Sessions;
 using Cresce.Core.Sql.CreateEntities;
 using Cresce.Core.Sql.Customers;
 using Cresce.Core.Sql.Employees;
@@ -29,8 +29,8 @@ namespace Cresce.Core.Sql
             RegisterReadOperations<UserDto, User>(serviceCollection);
             RegisterReadOperations<ServiceDto, Service>(serviceCollection);
             RegisterReadOperations<CustomerDto, Customer>(serviceCollection);
-            RegisterReadOperations<AppointmentDto, Appointment>(serviceCollection);
-            RegisterCreateOperations<AppointmentDto, Appointment>(serviceCollection);
+            RegisterReadOperations<SessionDto, Session>(serviceCollection);
+            RegisterCreateOperations<SessionDto, Session>(serviceCollection);
         }
 
         private static DbConnection CreateInMemoryDatabase()

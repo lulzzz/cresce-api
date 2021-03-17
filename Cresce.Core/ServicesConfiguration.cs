@@ -1,10 +1,10 @@
-using Cresce.Core.Appointments;
 using Cresce.Core.Authentication;
 using Cresce.Core.Customers;
 using Cresce.Core.Employees;
 using Cresce.Core.GetEntities;
 using Cresce.Core.Organizations;
 using Cresce.Core.Services;
+using Cresce.Core.Sessions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,7 +24,7 @@ namespace Cresce.Core
             serviceCollection.RegisterModule<EmployeesModule>();
             serviceCollection.RegisterModule<ServicesModule>();
             serviceCollection.RegisterModule<CustomersModule>();
-            serviceCollection.RegisterModule<AppointmentsModule>();
+            serviceCollection.RegisterModule<SessionsModule>();
             serviceCollection.AddTransient<ILoginService, LoginService>();
             serviceCollection.AddTransient<IOrganizationService, OrganizationService>();
             serviceCollection.AddTransient<IAuthorizationFactory, AuthorizationFactory>();

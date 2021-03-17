@@ -1,8 +1,8 @@
 using System;
 
-namespace Cresce.Core.Appointments
+namespace Cresce.Core.Sessions
 {
-    public record Appointment
+    public record Session
     {
         public int Id { get; init; }
         public DateTime StartedAt { get; init; }

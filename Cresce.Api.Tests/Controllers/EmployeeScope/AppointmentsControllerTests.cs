@@ -7,16 +7,16 @@ using NUnit.Framework;
 
 namespace Cresce.Api.Tests.Controllers.EmployeeScope
 {
-    public class AppointmentsControllerTests : WebApiTests
+    public class SessionsControllerTests : WebApiTests
     {
         [Test]
-        public async Task Posting_an_appointment_returns_201()
+        public async Task Posting_an_Session_returns_201()
         {
             var client = await GetAuthenticatedEmployeeClient();
 
             var response = await client.PostAsJsonAsync(
-                "api/v1/appointments",
-                new NewAppointmentModel
+                "api/v1/Sessions",
+                new NewSessionModel
                 {
                     Hours = 4.0,
                     CustomerId = 1,
@@ -27,8 +27,8 @@ namespace Cresce.Api.Tests.Controllers.EmployeeScope
 
             response.EnsureSuccessStatusCode();
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
-            Assert.That(response.Headers.Location!.ToString(), Is.EqualTo("api/v1/appointment/2"));
-            Assert.That(await response.GetContent<AppointmentModel>(), Is.EqualTo(new AppointmentModel
+            Assert.That(response.Headers.Location!.ToString(), Is.EqualTo("api/v1/Session/2"));
+            Assert.That(await response.GetContent<SessionModel>(), Is.EqualTo(new SessionModel
             {
                 Id = 2,
                 Hours = 4.0,

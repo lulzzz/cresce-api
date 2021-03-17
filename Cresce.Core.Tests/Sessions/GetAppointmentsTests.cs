@@ -1,23 +1,23 @@
 using System;
 using System.Threading.Tasks;
-using Cresce.Core.Appointments;
 using Cresce.Core.Authentication;
+using Cresce.Core.Sessions;
 using NUnit.Framework;
 
-namespace Cresce.Core.Tests.Appointments
+namespace Cresce.Core.Tests.Sessions
 {
-    public class GetAppointmentsTests : ServicesTests<IAppointmentServices>
+    public class GetSessionsTests : ServicesTests<ISessionServices>
     {
         [Test]
-        public async Task Get_appointments_lists_returns_the_full_list_of_services()
+        public async Task Get_Sessions_lists_returns_the_full_list_of_services()
         {
             var services = MakeService();
 
-            var entities = await services.GetAppointments(GetEmployeeAuthorization());
+            var entities = await services.GetSessions(GetEmployeeAuthorization());
 
             CollectionAssert.AreEqual(new[]
             {
-                new Appointment
+                new Session
                 {
                     Id = 1,
                     Discount = 10.0,
@@ -32,22 +32,22 @@ namespace Cresce.Core.Tests.Appointments
         }
 
         [Test]
-        public void Getting_appointments_with_expired_authentication_throws_exception()
+        public void Getting_Sessions_with_expired_authentication_throws_exception()
         {
             var services = MakeService();
 
             Assert.CatchAsync<UnauthorizedException>(() =>
-                services.GetAppointments(GetExpiredEmployeeAuthorization())
+                services.GetSessions(GetExpiredEmployeeAuthorization())
             );
         }
 
         [Test]
-        public void Getting_appointments_with_invalid_authentication_throws_exception()
+        public void Getting_Sessions_with_invalid_authentication_throws_exception()
         {
             var services = MakeService();
 
             Assert.CatchAsync<UnauthorizedException>(() =>
-                services.GetAppointments(GetInvalidEmployeeAuthorization())
+                services.GetSessions(GetInvalidEmployeeAuthorization())
             );
         }
     }

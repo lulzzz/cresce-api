@@ -1,12 +1,12 @@
 using System;
 using Cresce.Core;
-using Cresce.Core.Appointments;
+using Cresce.Core.Sessions;
 
 namespace Cresce.Api.Models
 {
-    public record NewAppointmentModel : IUnwrap<Appointment>
+    public record NewSessionModel : IUnwrap<Session>
     {
-        public Appointment Unwrap()
+        public Session Unwrap()
         {
             return new()
             {

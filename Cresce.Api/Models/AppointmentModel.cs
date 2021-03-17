@@ -1,12 +1,12 @@
 using System;
 using Cresce.Core;
-using Cresce.Core.Appointments;
+using Cresce.Core.Sessions;
 
 namespace Cresce.Api.Models
 {
-    public record AppointmentModel : IUnwrap<Appointment>
+    public record SessionModel : IUnwrap<Session>
     {
-        public AppointmentModel(Appointment entity)
+        public SessionModel(Session entity)
         {
             Id = entity.Id;
             StartedAt = entity.StartedAt;
@@ -18,7 +18,7 @@ namespace Cresce.Api.Models
             Value = entity.Value;
         }
 
-        public Appointment Unwrap()
+        public Session Unwrap()
         {
             return new()
             {
@@ -33,7 +33,7 @@ namespace Cresce.Api.Models
             };
         }
 
-        public AppointmentModel()
+        public SessionModel()
         {
         }
 
