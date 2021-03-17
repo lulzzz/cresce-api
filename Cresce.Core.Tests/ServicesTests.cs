@@ -61,7 +61,7 @@ namespace Cresce.Core.Tests
             var factory = GetService<IAuthorizationFactory>();
             return factory.GetAuthorizedEmployee(
                 factory.MakeAuthorization(new AdminUser {Id = "myUser"}),
-                new Employee {Id = 1}
+                new Employee {Id = 1, OrganizationId = "myOrganization"}
             );
         }
 
