@@ -5,6 +5,7 @@ using Cresce.Core.Employees;
 using Cresce.Core.GetEntities;
 using Cresce.Core.Organizations;
 using Cresce.Core.Services;
+using Cresce.Core.Sessions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,6 +25,7 @@ namespace Cresce.Core
             serviceCollection.RegisterModule<EmployeesModule>();
             serviceCollection.RegisterModule<ServicesModule>();
             serviceCollection.RegisterModule<CustomersModule>();
+            serviceCollection.RegisterModule<SessionsModule>();
             serviceCollection.RegisterModule<AppointmentsModule>();
             serviceCollection.AddTransient<ILoginService, LoginService>();
             serviceCollection.AddTransient<IOrganizationService, OrganizationService>();

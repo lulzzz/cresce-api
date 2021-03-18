@@ -4,13 +4,13 @@ namespace Cresce.Core.Appointments
 {
     public record Appointment
     {
-        public int Id { get; init; }
-        public DateTime StartedAt { get; init; }
-        public int ServiceId { get; init; }
-        public int EmployeeId { get; init; }
-        public int CustomerId { get; init; }
-        public double Hours { get; init; }
-        public double Discount { get; init; }
-        public double Value { get; init; }
+        public int Id { get; set; }
+        public int ServiceId { get; set; }
+        public int EmployeeId { get; set; }
+        public int CustomerId { get; set; }
+        public DateTime From { get; set; }
+        public DateTime To { get; set; }
+        public string Color { get; set; }
+        public Recurrence? Recurrence { get; set; }
     }
 }

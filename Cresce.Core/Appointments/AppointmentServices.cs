@@ -1,40 +1,50 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Cresce.Core.Authentication;
+using Cresce.Core.Employees.GetEmployees;
 using Cresce.Core.GetEntities;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Cresce.Core.Appointments
 {
     internal class AppointmentServices : IAppointmentServices
     {
         private readonly IGetEntitiesService<Appointment> _getEntitiesGateway;
-        private readonly ICreateEntityGateway<Appointment> _createEntityGateway;
+        private readonly IGetEmployeesGateway _getEmployees;
 
         public AppointmentServices(
             IGetEntitiesService<Appointment> getEntitiesGateway,
-            ICreateEntityGateway<Appointment> createEntityGateway
+            IGetEmployeesGateway getEmployees
         )
         {
             _getEntitiesGateway = getEntitiesGateway;
-            _createEntityGateway = createEntityGateway;
+            _getEmployees = getEmployees;
         }
 
-        public Task<IEnumerable<Appointment>> GetAppointments(IEmployeeAuthorization authorization)
-            => _getEntitiesGateway.GetEntities(authorization);
-
-        public async Task<Appointment> CreateAppointment(Appointment appointment, IEmployeeAuthorization authorization)
+        public async Task<IEnumerable<Appointment>> GetAppointments(IEmployeeAuthorization authorization)
         {
-            authorization.EnsureIsValid();
+            var appointments = await _getEntitiesGateway.GetEntities(authorization);
+            var employees = await _getEmployees.GetEmployees(authorization.OrganizationId);
 
-            appointment = appointment with
+            return appointments.Select(appointment => appointment with
             {
-                EmployeeId = authorization.EmployeeId
-            };
+                Color = GetColor(employees, appointment)
+            });
+        }
 
-            return appointment with
-            {
-                Id = await _createEntityGateway.Create(appointment)
-            };
+        private static string GetColor(IEnumerable<Employee> employees, Appointment appointment)
+        {
+            return employees.First(e => e.Id == appointment.EmployeeId).Color;
+        }
+    }
+
+    class AppointmentsModule : IServicesModule
+    {
+        public void RegisterServices(IServiceCollection serviceCollection)
+        {
+            serviceCollection.RegisterGetEntities<Appointment>();
+            serviceCollection.AddTransient<IAppointmentServices, AppointmentServices>();
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Cresce.Core.Employees.EmployeeValidation
 
             return !employee.Verify(employeePin)
                 ? _authorizationFactory.MakeExpiredEmployeeAuthorization()
-                : _authorizationFactory.GetAuthorizedEmployee(user, employeePin.EmployeeId);
+                : _authorizationFactory.GetAuthorizedEmployee(user, employee);
         }
     }
 }

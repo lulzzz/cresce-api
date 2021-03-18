@@ -56,6 +56,7 @@ namespace Cresce.Core.Authentication
     public interface IEmployeeAuthorization : IAuthorization
     {
         int EmployeeId { get; }
+        string OrganizationId { get; }
         void EnsureIsValid();
     }
 
@@ -67,6 +68,7 @@ namespace Cresce.Core.Authentication
         }
 
         public int EmployeeId => int.Parse(GetClaim(ClaimTypes.UserData).Value);
+        public string OrganizationId => GetClaim(ClaimTypes.System).Value;
 
         public void EnsureIsValid()
         {

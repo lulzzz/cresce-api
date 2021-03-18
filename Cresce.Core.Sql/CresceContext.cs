@@ -1,9 +1,11 @@
 using System;
+using Cresce.Core.Appointments;
 using Cresce.Core.Sql.Appointments;
 using Cresce.Core.Sql.Customers;
 using Cresce.Core.Sql.Employees;
 using Cresce.Core.Sql.Organizations;
 using Cresce.Core.Sql.Services;
+using Cresce.Core.Sql.Sessions;
 using Cresce.Core.Sql.Users;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +25,7 @@ namespace Cresce.Core.Sql
             modelBuilder.Entity<EmployeeDto>().ToTable("Employees");
             modelBuilder.Entity<ServiceDto>().ToTable("Services");
             modelBuilder.Entity<CustomerDto>().ToTable("Customers");
+            modelBuilder.Entity<SessionDto>().ToTable("Sessions");
             modelBuilder.Entity<AppointmentDto>().ToTable("Appointments");
         }
 
@@ -40,7 +43,8 @@ namespace Cresce.Core.Sql
                 Title = "Engineer",
                 Image = new Image(GetSampleImage()).ToByteArray(),
                 OrganizationId = "myOrganization",
-                Pin = "1234"
+                Pin = "1234",
+                Color = "0xFF2196F3",
             });
             Add(new ServiceDto
             {
@@ -53,7 +57,7 @@ namespace Cresce.Core.Sql
                 Name = "Diogo Quintas",
                 Image = new Image(GetSampleImage()).ToByteArray(),
             });
-            Add(new AppointmentDto
+            Add(new SessionDto
             {
                 Discount = 10.0,
                 Hours = 3.5,
@@ -62,6 +66,26 @@ namespace Cresce.Core.Sql
                 EmployeeId = 1,
                 ServiceId = 1,
                 StartedAt = new DateTime(2020, 02, 10)
+            });
+            Add(new AppointmentDto
+            {
+                From = new DateTime(2021, 3, 16, 10, 0, 0),
+                To = new DateTime(2021, 3, 16, 11, 0, 0),
+                CustomerId = 1,
+                EmployeeId = 1,
+                ServiceId = 1,
+            });
+            Add(new AppointmentDto
+            {
+                From = new DateTime(2021, 3, 16, 15, 0, 0),
+                To = new DateTime(2021, 3, 16, 16, 0, 0),
+                CustomerId = 1,
+                EmployeeId = 1,
+                ServiceId = 1,
+                RecurrenceType = RecurrenceType.Weekly,
+                RecurrenceStart = new DateTime(2021, 3, 16),
+                RecurrenceEnd = new DateTime(2021, 4, 16),
+                RecurrenceWeekDays = "1,2"
             });
 
             SaveChanges();
