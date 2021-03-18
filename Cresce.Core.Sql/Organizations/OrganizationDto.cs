@@ -4,8 +4,8 @@ namespace Cresce.Core.Sql.Organizations
 {
     internal class OrganizationDto : IUnwrap<Organization>, IWrap<Organization>
     {
-        public string Id { get; set; }
-        public string UserId { get; set; }
+        public string Id { get; set; } = string.Empty;
+        public string UserId { get; set; } = string.Empty;
 
         public Organization Unwrap()
         {

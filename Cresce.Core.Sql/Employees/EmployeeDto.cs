@@ -5,12 +5,12 @@ namespace Cresce.Core.Sql.Employees
     internal class EmployeeDto : IUnwrap<Employee>, IWrap<Employee>, IHaveAutoIdentity
     {
         public int Id { get; set; }
-        public string Title { get; set; }
-        public byte[] Image { get; set; }
-        public string OrganizationId { get; set; }
-        public string Pin { get; set; }
-        public string Name { get; set; }
-        public string Color { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public byte[] Image { get; set; } = new byte[0];
+        public string OrganizationId { get; set; } = string.Empty;
+        public string Pin { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Color { get; set; } = string.Empty;
 
         public Employee Unwrap()
         {

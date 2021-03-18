@@ -15,5 +15,8 @@ namespace Cresce.Core.Employees.GetEmployees
             await authorization.EnsureCanAccessOrganization(organizationId);
             return await _gateway.GetEmployees(organizationId);
         }
+
+        public Task<IEnumerable<Employee>> GetEntities(IEmployeeAuthorization authorization) =>
+            GetEmployees(authorization, authorization.OrganizationId);
     }
 }

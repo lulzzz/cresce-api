@@ -26,6 +26,7 @@ namespace Cresce.Core.Tests.Appointments
                     From = new DateTime(2021, 3, 16, 10, 0, 0),
                     To = new DateTime(2021, 3, 16, 11, 0, 0),
                     Color = "0xFF2196F3",
+                    EventName = "Diogo Quintas\nDevelopment",
                 },
                 new Appointment
                 {
@@ -36,6 +37,7 @@ namespace Cresce.Core.Tests.Appointments
                     From = new DateTime(2021, 3, 16, 15, 0, 0),
                     To = new DateTime(2021, 3, 16, 16, 0, 0),
                     Color = "0xFF2196F3",
+                    EventName = "Diogo Quintas\nDevelopment",
                     Recurrence = new Recurrence
                     {
                         Type = RecurrenceType.Weekly,

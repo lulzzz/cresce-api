@@ -26,5 +26,8 @@ namespace Cresce.Core.Employees
 
         public Task<IEmployeeAuthorization> ValidatePin(IAuthorization user, EmployeePin employeePin) =>
             _employeeValidationService.ValidatePin(user, employeePin);
+
+        public Task<IEnumerable<Employee>> GetEntities(IEmployeeAuthorization authorization) =>
+            _getEmployeesService.GetEntities(authorization);
     }
 }

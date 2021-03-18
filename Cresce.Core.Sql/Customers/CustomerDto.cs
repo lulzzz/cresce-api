@@ -5,8 +5,8 @@ namespace Cresce.Core.Sql.Customers
     internal class CustomerDto : IUnwrap<Customer>, IWrap<Customer>, IHaveAutoIdentity
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public byte[] Image { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public byte[] Image { get; set; } = new byte[0];
 
         public Customer Unwrap()
         {

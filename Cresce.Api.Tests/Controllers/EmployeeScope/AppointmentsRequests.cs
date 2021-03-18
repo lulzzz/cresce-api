@@ -20,6 +20,7 @@ namespace Cresce.Api.Tests.Controllers.EmployeeScope
                     Color = "0xFF2196F3",
                     From = new DateTime(2021, 3, 16, 10, 0, 0),
                     To = new DateTime(2021, 3, 16, 11, 0, 0),
+                    EventName = "Diogo Quintas\nDevelopment",
                 },
                 new Appointment
                 {
@@ -30,6 +31,7 @@ namespace Cresce.Api.Tests.Controllers.EmployeeScope
                     Color = "0xFF2196F3",
                     From = new DateTime(2021, 3, 16, 15, 0, 0),
                     To = new DateTime(2021, 3, 16, 16, 0, 0),
+                    EventName = "Diogo Quintas\nDevelopment",
                     Recurrence = new Recurrence
                     {
                         Type = RecurrenceType.Weekly,
