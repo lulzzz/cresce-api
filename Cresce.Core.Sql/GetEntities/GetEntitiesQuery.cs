@@ -15,7 +15,7 @@ namespace Cresce.Core.Sql.GetEntities
         public GetEntitiesQuery(CresceContext context) => _context = context;
 
         public async Task<IEnumerable<TEntity>> GetEntities(
-            Expression<Func<TEntityDto, bool>> filter = null
+            Expression<Func<TEntityDto, bool>>? filter = null
         )
         {
             filter ??= model => true;

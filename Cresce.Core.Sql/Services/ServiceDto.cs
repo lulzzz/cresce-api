@@ -5,9 +5,9 @@ namespace Cresce.Core.Sql.Services
     internal class ServiceDto : IUnwrap<Service>, IWrap<Service>, IHaveAutoIdentity
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public double Value { get; set; }
-        public byte[] Image { get; set; }
+        public byte[] Image { get; set; } = new byte[0];
 
         public Service Unwrap()
         {

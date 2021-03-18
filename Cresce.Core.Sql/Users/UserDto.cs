@@ -4,8 +4,8 @@ namespace Cresce.Core.Sql.Users
 {
     internal class UserDto : IUnwrap<User>, IWrap<User>
     {
-        public string Id { get; set; }
-        public string Password { get; set; }
+        public string Id { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
 
         public User Unwrap()
         {

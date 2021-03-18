@@ -5,10 +5,10 @@ namespace Cresce.Core.Appointments
 {
     public record Recurrence
     {
-        public string Type { get; set; }
-        public string[] WeekDays { get; set; }
-        public DateTime Start { get; set; }
-        public DateTime? End { get; set; }
+        public string Type { get; init; } = string.Empty;
+        public string[] WeekDays { get; init; } = new string[0];
+        public DateTime Start { get; init; }
+        public DateTime? End { get; init; }
 
         public virtual bool Equals(Recurrence? other)
         {
