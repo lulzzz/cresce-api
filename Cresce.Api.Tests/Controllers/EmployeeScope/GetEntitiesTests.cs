@@ -1,6 +1,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using Cresce.Api.Models;
+using Cresce.Core.Appointments;
 using NUnit.Framework;
 
 namespace Cresce.Api.Tests.Controllers.EmployeeScope
@@ -8,6 +9,7 @@ namespace Cresce.Api.Tests.Controllers.EmployeeScope
     [TestFixture(typeof(CustomerRequests), typeof(CustomerModel))]
     [TestFixture(typeof(ServiceRequests), typeof(ServiceModel))]
     [TestFixture(typeof(SessionsRequests), typeof(SessionModel))]
+    [TestFixture(typeof(AppointmentsRequests), typeof(Appointment))]
     public class GetEntitiesTests<T, TEntity> : WebApiTests
         where T : ControllerRequests<TEntity>, new()
     {
