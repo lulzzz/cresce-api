@@ -13,5 +13,13 @@ namespace Cresce.Core.Appointments
         public string Color { get; init; } = string.Empty;
         public Recurrence? Recurrence { get; init; }
         public string EventName { get; init; } = string.Empty;
+
+        public void EnsureValidForCreation()
+        {
+            if (From.Year < 2000 || To.Year < 2000 || CustomerId == 0 || ServiceId == 0)
+            {
+                throw new InvalidEntityException();
+            }
+        }
     }
 }

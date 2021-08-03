@@ -51,6 +51,9 @@ namespace Cresce.Core.Appointments
             IEmployeeAuthorization authorization
         )
         {
+            authorization.EnsureIsValid();
+            appointment.EnsureValidForCreation();
+
             var employees = await _employeesQuery.GetEntities(authorization);
             var services = await _serviceQuery.GetEntities(authorization);
             var customers = await _customerQuery.GetEntities(authorization);
