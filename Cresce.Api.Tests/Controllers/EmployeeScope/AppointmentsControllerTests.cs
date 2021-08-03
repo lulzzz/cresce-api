@@ -27,15 +27,17 @@ namespace Cresce.Api.Tests.Controllers.EmployeeScope
 
             response.EnsureSuccessStatusCode();
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
-            Assert.That(response.Headers.Location!.ToString(), Is.EqualTo("api/v1/Appointment/2"));
-            Assert.That(await response.GetContent<SessionModel>(), Is.EqualTo(new SessionModel
+            Assert.That(response.Headers.Location!.ToString(), Is.EqualTo("api/v1/Appointment/3"));
+            Assert.That(await response.GetContent<AppointmentModel>(), Is.EqualTo(new AppointmentModel
             {
-                Id = 2,
-                Hours = 4.0,
+                Id = 3,
                 CustomerId = 1,
                 EmployeeId = 1,
                 ServiceId = 1,
-                StartedAt = new DateTime(2020, 01, 23)
+                Color = "0xFF2196F3",
+                EventName = "Diogo Quintas\nDevelopment",
+                From = new DateTime(2020, 01, 23),
+                To = new DateTime(2020, 01, 23)
             }));
         }
     }

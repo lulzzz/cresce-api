@@ -43,7 +43,12 @@ namespace Cresce.Core.Sql.Appointments
 
         public void Wrap(Appointment entity)
         {
-            throw new System.NotImplementedException();
+            Id = entity.Id;
+            ServiceId = entity.ServiceId;
+            CustomerId = entity.CustomerId;
+            EmployeeId = entity.EmployeeId;
+            From = entity.From;
+            To = entity.To;
         }
     }
 }

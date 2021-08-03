@@ -18,6 +18,11 @@ namespace Cresce.Api.Models
             EventName = appointment.EventName;
         }
 
+        public AppointmentModel()
+        {
+
+        }
+
         public int Id { get; init; }
         public int ServiceId { get; init; }
         public int EmployeeId { get; init; }

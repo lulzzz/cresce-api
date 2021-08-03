@@ -51,9 +51,20 @@ namespace Cresce.Core.Appointments
             IEmployeeAuthorization authorization
         )
         {
+            var employees = await _employeesQuery.GetEntities(authorization);
+            var services = await _serviceQuery.GetEntities(authorization);
+            var customers = await _customerQuery.GetEntities(authorization);
+
+            appointment = appointment with
+            {
+                EmployeeId = authorization.EmployeeId
+            };
+
             return appointment with
             {
-                Id = await _createEntityGateway.Create(appointment)
+                Id = await _createEntityGateway.Create(appointment),
+                Color = GetColor(employees, appointment),
+                EventName = MakeEventName(services, customers, appointment)
             };
         }
 
