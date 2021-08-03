@@ -18,7 +18,7 @@ namespace Cresce.Core.Sql.Appointments
 
         public Appointment Unwrap()
         {
-            return new Appointment
+            return new()
             {
                 Id = Id,
                 ServiceId = ServiceId,

@@ -13,6 +13,7 @@ namespace Cresce.Core.Appointments
     internal class AppointmentServices : IAppointmentServices
     {
         private readonly IGetEntitiesService<Appointment> _appointmentsQuery;
+        private readonly ICreateEntityGateway<Appointment> _createEntityGateway;
         private readonly IGetEntitiesService<Employee> _employeesQuery;
         private readonly IGetEntitiesService<Service> _serviceQuery;
         private readonly IGetEntitiesService<Customer> _customerQuery;
@@ -21,13 +22,14 @@ namespace Cresce.Core.Appointments
             IGetEntitiesService<Appointment> appointmentsQuery,
             IGetEntitiesService<Employee> employeesQuery,
             IGetEntitiesService<Service> serviceQuery,
-            IGetEntitiesService<Customer> customerQuery
-        )
+            IGetEntitiesService<Customer> customerQuery,
+            ICreateEntityGateway<Appointment> createEntityGateway)
         {
             _appointmentsQuery = appointmentsQuery;
             _employeesQuery = employeesQuery;
             _serviceQuery = serviceQuery;
             _customerQuery = customerQuery;
+            _createEntityGateway = createEntityGateway;
         }
 
         public async Task<IEnumerable<Appointment>> GetAppointments(IEmployeeAuthorization authorization)
@@ -44,7 +46,18 @@ namespace Cresce.Core.Appointments
             });
         }
 
-        private string MakeEventName(
+        public async Task<Appointment> CreateAppointment(
+            Appointment appointment,
+            IEmployeeAuthorization authorization
+        )
+        {
+            return appointment with
+            {
+                Id = await _createEntityGateway.Create(appointment)
+            };
+        }
+
+        private static string MakeEventName(
             IEnumerable<Service> services,
             IEnumerable<Customer> customers,
             Appointment appointment)

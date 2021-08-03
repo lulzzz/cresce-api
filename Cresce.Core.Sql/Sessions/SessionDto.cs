@@ -16,7 +16,7 @@ namespace Cresce.Core.Sql.Sessions
 
         public Session Unwrap()
         {
-            return new Session
+            return new()
             {
                 Id = Id,
                 StartedAt = StartedAt,
