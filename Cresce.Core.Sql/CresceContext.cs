@@ -46,6 +46,15 @@ namespace Cresce.Core.Sql
                 Pin = "1234",
                 Color = "0xFF2196F3",
             });
+            Add(new EmployeeDto
+            {
+                Name = "Ricardo Nunes",
+                Title = "Engineer",
+                Image = new Image(GetSampleImage()).ToByteArray(),
+                OrganizationId = "myOrganization",
+                Pin = "1234",
+                Color = "0xFF2196F3",
+            });
             Add(new ServiceDto
             {
                 Name = "Development",
