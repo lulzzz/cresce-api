@@ -20,7 +20,6 @@ namespace Cresce.Core.Employees
             _employeeValidationService = employeeValidationService;
         }
 
-
         public Task<IEnumerable<Employee>> GetEmployees(IAuthorization authorization, string organizationId) =>
             _getEmployeesService.GetEmployees(authorization, organizationId);
 

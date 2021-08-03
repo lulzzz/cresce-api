@@ -10,7 +10,7 @@ namespace Cresce.Core.Sql.Customers
 
         public Customer Unwrap()
         {
-            return new Customer
+            return new()
             {
                 Id = Id,
                 Name = Name,

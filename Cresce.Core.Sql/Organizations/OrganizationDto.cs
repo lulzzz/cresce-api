@@ -9,7 +9,7 @@ namespace Cresce.Core.Sql.Organizations
 
         public Organization Unwrap()
         {
-            return new Organization
+            return new()
             {
                 Name = Id
             };

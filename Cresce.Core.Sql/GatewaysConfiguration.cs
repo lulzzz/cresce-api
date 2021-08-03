@@ -32,6 +32,7 @@ namespace Cresce.Core.Sql
             RegisterReadOperations<ServiceDto, Service>(serviceCollection);
             RegisterReadOperations<CustomerDto, Customer>(serviceCollection);
             RegisterReadOperations<AppointmentDto, Appointment>(serviceCollection);
+            RegisterCreateOperations<AppointmentDto, Appointment>(serviceCollection);
             RegisterReadOperations<SessionDto, Session>(serviceCollection);
             RegisterCreateOperations<SessionDto, Session>(serviceCollection);
         }

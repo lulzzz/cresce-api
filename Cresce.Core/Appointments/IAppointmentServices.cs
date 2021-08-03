@@ -7,5 +7,6 @@ namespace Cresce.Core.Appointments
     public interface IAppointmentServices
     {
         Task<IEnumerable<Appointment>> GetAppointments(IEmployeeAuthorization authorization);
+        Task<Appointment> CreateAppointment(Appointment unwrap, IEmployeeAuthorization authorization);
     }
 }

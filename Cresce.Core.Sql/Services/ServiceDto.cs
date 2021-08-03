@@ -11,7 +11,7 @@ namespace Cresce.Core.Sql.Services
 
         public Service Unwrap()
         {
-            return new Service
+            return new()
             {
                 Id = Id,
                 Name = Name,

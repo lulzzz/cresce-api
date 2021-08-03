@@ -6,7 +6,7 @@ namespace Cresce.Core.Sql.Employees
     {
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
-        public byte[] Image { get; set; } = new byte[0];
+        public byte[]? Image { get; set; } = new byte[0];
         public string OrganizationId { get; set; } = string.Empty;
         public string Pin { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
@@ -14,7 +14,7 @@ namespace Cresce.Core.Sql.Employees
 
         public Employee Unwrap()
         {
-            return new Employee
+            return new ()
             {
                 Id = Id,
                 Name = Name,
