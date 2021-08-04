@@ -35,4 +35,4 @@ jobs:
     - name: Trigger Azure Deploy
       uses: muinmomin/webhook-action@v1.0.0
       with:
-        url: https://$cresce:${{ secrets.AZURE_TRIGGER_TOKEN }}@cresce.scm.azurewebsites.net/docker/hook
+        url: ${{ secrets.AZURE_DEPLOY_WEBHOOK }}
