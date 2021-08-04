@@ -23,8 +23,8 @@ namespace Cresce.Api.Controllers
                 ServerTime = DateTime.UtcNow,
                 Health = HealthStatus.Healthy,
                 ApiVersion = _settings.Version,
-                //ConnectionString = _settings.ConnectionString,
-                //EnvConnectionString = _settings.EnvConnectionString
+                ConnectionString = _settings.ConnectionString,
+                EnvConnectionString = _settings.EnvConnectionString
             };
 
         [HttpGet("logs")]
